@@ -21,9 +21,12 @@ Statik HTML/CSS/JS ile hazirlanan, TR/EN dil secenekli kisisel site. Ana sayfa, 
 - `js/`: `nav.js`, `theme.js`, `viewport.js`, `gallery.js`, `chatbot.js`
 - `img/`: gorseller, favicon ve OG gorselleri
 
-## Calistirma
-- Bagimlilik yok; `index.html` dosyasini dogrudan acabilir veya basit bir sunucu calistirabilirsin (ornegin `python -m http.server 8000`).
-- Chatbotun calismasi icin internet gerekir; API kapaliysa uyarilarla doner.
+## Chatbot altyapisi
+- Frontend: `js/chatbot.js` sohbet panelini acar, metni `https://ai-zntk.onrender.com/api/chat` endpoint'ine POST eder.
+- Gonderilen veri: `{ message, page, title, lang, history }` (son 10 mesaj), 12 sn timeout, 429/502 gibi kodlarda kullaniciya kisa uyarilar.
+- Depolama: Gecmis ve acik/kapali durumu sadece tarayici `localStorage`'da tutulur; sunucuya kayit yapilmaz.
+- Backend: Endpoint Render.com uzerinde calisir ve gelen istegi Groq AI API'sine ileterek yaniti dondurur; bu nedenle canli sohbet icin Render ve Groq API erisimi gerekir.
+- Ozellestirme: Endpoint veya model degistirmek istersen `js/chatbot.js` icindeki `CHAT_ENDPOINT` degerini ve sunucu tarafinda kullandigin Groq kimligini guncellemen yeterli.
 
 ## Dagitim
 - Statik hosting (GitHub Pages/Netlify/Vercel) icin depo kokunu yuklemek yeterli.
